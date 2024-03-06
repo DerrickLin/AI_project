@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
-from .models import CustomUser, product
+from .models import CustomUser, product, Category
 from .forms import SignUpForm
 from django.views.generic import  CreateView
 from .forms import RegisterForm
@@ -259,6 +259,30 @@ def register(request):
     else:
         form = SignUpForm()
     return render(request, 'sign_up.html', {'form': form})
+
+
+def shop(request):
+    products = product.objects.all()
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'price_asc':
+        products = products.order_by('pCost')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-pCost')
+    
+    return render(request, 'shop.html', locals())
+
+def noodles(request):
+    noodles_category = Category.objects.get(name="泡麵")
+    products = product.objects.filter(pCategory=noodles_category.id)
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'price_asc':
+        products = products.order_by('pCost')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-pCost')
+    
+    return render(request, 'shop.html', locals())
 
 
 
