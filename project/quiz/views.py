@@ -284,6 +284,42 @@ def noodles(request):
     
     return render(request, 'shop.html', locals())
 
+def candy(request):
+    candy_category = Category.objects.get(name="糖果")
+    products = product.objects.filter(pCategory=candy_category.id)
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'price_asc':
+        products = products.order_by('pCost')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-pCost')
+    
+    return render(request, 'shop.html', locals())
+
+def biscuits(request):
+    biscuits_category = Category.objects.get(name="餅乾")
+    products = product.objects.filter(pCategory=biscuits_category.id)
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'price_asc':
+        products = products.order_by('pCost')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-pCost')
+    
+    return render(request, 'shop.html', locals())
+
+def drinks(request):
+    drinks_category = Category.objects.get(name="飲料")
+    products = product.objects.filter(pCategory=drinks_category.id)
+    sort_by = request.GET.get('sort_by')
+
+    if sort_by == 'price_asc':
+        products = products.order_by('pCost')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-pCost')
+    
+    return render(request, 'shop.html', locals())
+
 
 
     
