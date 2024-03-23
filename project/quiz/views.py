@@ -48,7 +48,6 @@ class RegisterManager(BaseUserManager):
 
 # Create your views here.
 
-
 class SignUpView(CreateView):
     form_class = RegisterForm  # 使用你的 RegisterForm
 
@@ -321,7 +320,14 @@ def drinks(request):
     return render(request, 'shop.html', locals())
 
 
-
+def renew_Picture(request):
+    if request.method == "POST":
+        mess = request.POST["mess"]
+        print(mess)
+        os.remove('./static/assets/test.jpg')
+        os.remove('./static/assets/result.jpg')
+        return redirect("/home/")
+        # os.remove('./static/assets/test.jpg')
     
 # def register_create_view(request):
 #     form = RegisterForm(request.POST or None)

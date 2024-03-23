@@ -18,11 +18,11 @@
 
         <!-- 顯示辨識後框選的圖片 -->
         <div class="text-center">
-            <img src="{% static "assets/result.jpg" %}" class="rounded" alt="..." width="300" height="300"/>
+            <img src="{% static "assets/result.jpg" %}" class="rounded" alt="..." width="300" height="300" id="result-img" onload="enable_Renew_Button()"/>
         </div>
 
         <!--上傳圖片-->
-        <form action="/home/" method="POST" name="form1" enctype="multipart/form-data">
+        <form action="/home/" method="POST" name="form1" enctype="multipart/form-data" >
             {% csrf_token %}
             <br/>
             <div class="container px-4 px-lg-5">
@@ -45,8 +45,19 @@
         <div class="container">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 查看商品清單
-            </button>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <form action="{% url 'renew_Picture' %}" method="post" id="renew-form">
+                {% csrf_token %}
+                <input type="hidden" value="sucess" name="mess" />
+                <button id="renew-button" type="submit" class="btn btn-primary" value="sucess" disabled>重新辨識</button>
+            </form>
         </div>  
+
+        <script>
+            function enable_Renew_Button() {
+                document.getElementById("renew-button").disabled = false;
+            }
+        </script>
 
 
         <!-- Modal -->
@@ -98,6 +109,7 @@
             </div>
         </div>
 
+ 
 
         <script>
         //check if button pressed
