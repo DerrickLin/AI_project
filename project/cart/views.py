@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .cart import Cart
-from quiz.models import product
+from quiz.models import product, order, CustomUser
 from django.http import JsonResponse
 from django.contrib import messages
+from django.utils import timezone
 import json
+import random, re
 # Create your views here.
 
 def cart_summary(request):
@@ -12,7 +14,6 @@ def cart_summary(request):
     # quantities = cart.get_quants
     item_amount = request.session.get('item_amount', [])
     All_products = dict(zip(cart_products, item_amount))
-    print(All_products)
     totals = cart.cart_total(item_amount)
     # print(cart_products)
 
@@ -86,3 +87,29 @@ def cart_delete(request):
 
 def cart_update(request):
     pass
+
+
+def checkout(request):
+    if request.method == "POST":
+        random_ID = random.randint(1000000000, 9999999999)
+        current_time = timezone.now()
+        order_product = request.POST["oProduct"]
+        order_customer_username = request.POST["oClient"] 
+        order_total = int(request.POST["oCost"])
+        order_quantities = sum(eval(request.POST["order_quantity"]))
+        
+        pattern = r"<product: (.*?)>"
+        product_names = re.findall(pattern, order_product)
+        order_customer, created = CustomUser.objects.get_or_create(username=order_customer_username)
+        
+        unit = order.objects.create(oId=random_ID,
+                                      oDate=current_time,
+                                      oProduct=product_names,
+                                      oClient=order_customer,
+                                      oCost=order_total,
+                                      order_quantity=order_quantities)
+        unit.save()
+        
+        print(random_ID, current_time, product_names,order_customer, order_total, order_quantities)
+        return redirect("/home/")
+      

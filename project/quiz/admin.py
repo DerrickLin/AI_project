@@ -25,6 +25,11 @@ class orderAdmin(admin.ModelAdmin):
     list_filter=('oDate',)
     search_fields=('oDate',)
     ordering=('id',)
+    
+    # def get_products(self, obj):
+    #     return ', '.join(product.name for product in obj.oProduct.all())
+
+    # get_products.short_description = 'Products'
 
 admin.site.register(order,orderAdmin)
 

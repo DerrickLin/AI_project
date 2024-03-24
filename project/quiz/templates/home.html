@@ -49,7 +49,7 @@
             <form action="{% url 'renew_Picture' %}" method="post" id="renew-form">
                 {% csrf_token %}
                 <input type="hidden" value="sucess" name="mess" />
-                <button id="renew-button" type="submit" class="btn btn-primary" value="sucess" disabled>重新辨識</button>
+                <button id="renew-button" type="submit" onclick="window.location.href='{% url 'home' %}'" class="btn btn-primary" value="sucess" disabled>重新辨識</button>
             </form>
         </div>  
 

@@ -70,8 +70,9 @@ class product(models.Model):
 # 訂單資訊   
 class order(models.Model):
     oId=models.CharField(max_length=10,null=False)
-    oDate=models.DateField(default=datetime.datetime.today)
-    oProduct=models.ForeignKey(product, on_delete=models.CASCADE)
+    oDate=models.DateTimeField(default=datetime.datetime.today)
+    oProduct=models.CharField(max_length=200, null=False, default=None)
+    # oProduct=models.ManyToManyField(product)
     oClient=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     oCost=models.PositiveIntegerField(blank=False)
     order_quantity = models.IntegerField(default=1)

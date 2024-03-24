@@ -34,7 +34,7 @@
                                 </div>
                                 <br/>
                                 {% comment %} <a href="{% url 'home' %}" class="btn btn-secondary">home</a>  {% endcomment %}
-                                <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Remove</button>
+                                <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Remove</button> 
                             </center>
                         </div>
                     </div>
@@ -45,11 +45,23 @@
             {% if totals == 0 %}
                 <h3>購物車是空的...</h3>
             {% else %}
-                <h3>Total: ${{totals}}</h3>
+                
+                <span><h3>Total: ${{totals}}</h3></span>
+                
             {% endif %}
             
-            <div class="p-3 m-0 border-0 bd-example m-0 border-0">
+            <div class="p-3 m-0 border-0 bd-example m-0 border-0 d-flex justify-content-between">
                 <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">回主畫面</button>
+                {% if totals != 0 %}
+                    <form action="{% url 'checkout' %}" method="post" class="mb-0">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{All_products}}" name="oProduct" />
+                        <input type="hidden" value="{{user.username}}" name="oClient" />
+                        <input type="hidden" value="{{totals}}" name="oCost" />
+                        <input type="hidden" value="{{item_amount}}" name="order_quantity" />
+                        <button type="submit" class="btn btn-success" >確認結帳</button>
+                    </form>
+                {% endif %}
             </div>
             <br/><br/><br/>
             </div>
