@@ -211,6 +211,10 @@ def about(request):
     return render(request,'about.html',{})
 
 
+def check_finished(request):
+    return render(request,'check_finished.html',{})
+
+
 def update_user(request, id=None):
     if request.method == 'POST':
         form = UpdateUserForm(request.POST)

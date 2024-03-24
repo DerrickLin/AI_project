@@ -111,5 +111,5 @@ def checkout(request):
         unit.save()
         
         print(random_ID, current_time, product_names,order_customer, order_total, order_quantities)
-        return redirect("/home/")
+        return redirect("/check_finished/")
       
