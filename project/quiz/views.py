@@ -2,7 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
-from .models import CustomUser, product, Category
+from django.contrib.auth.decorators import login_required
+from .models import CustomUser, product, Category, order
 from .forms import SignUpForm
 from django.views.generic import  CreateView
 from .forms import RegisterForm
@@ -332,7 +333,22 @@ def renew_Picture(request):
         os.remove('./static/assets/result.jpg')
         return redirect("/home/")
         # os.remove('./static/assets/test.jpg')
+
+
+
+@login_required
+def order_list(request):
+    # 取得目前登入使用者
+    user = request.user
     
+    # 查詢與該使用者相關聯的訂單
+    user_orders = order.objects.filter(oClient=user)
+    
+    # 將訂單資料傳遞給模板
+    context = {'orders': user_orders}
+    return render(request, 'order_list.html', context)
+
+
 # def register_create_view(request):
 #     form = RegisterForm(request.POST or None)
 #     if form.is_valid():
