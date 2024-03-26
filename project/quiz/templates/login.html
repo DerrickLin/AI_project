@@ -57,11 +57,15 @@
 <body>
     <div class="container">
         <h1>無人商店會員登入</h1>
-        {% if error_message %}
-            <div class="alert alert-danger" role="alert">
-                {{ error_message }}
-            </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+                </div>
+            {% endfor %}
         {% endif %}
+
+
         <form method="post">
             {% csrf_token %}
             <div class="form-group">

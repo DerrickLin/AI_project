@@ -31,6 +31,10 @@ def cart_add(request):
         # 取得商品名稱及對應數量
         product_list = request.POST.get('product_info')
         # product_qty= request.POST.get('product_qty')
+        if product_list == "None":
+            # 如果獲取到的product_info為"None"，返回一個適當的響應
+            return JsonResponse({'0': '0'})
+        
         #這邊要對dictionary修改
         product_list1 = eval(product_list)
         # print(product_list1)
@@ -65,7 +69,7 @@ def cart_add(request):
             # response_data.append({'Product Name': product_info.pName})
             response = JsonResponse({'qty': cart_quantity})
             # response_data.append({'qty': product_total_quantity})
-       
+     
         # return JsonResponse(response_data, safe=False)
         return response
     
@@ -81,7 +85,7 @@ def cart_delete(request):
 
         response = JsonResponse({'product':product_id})
 		#return redirect('cart_summary')
-        messages.success(request, ("Item Deleted From Shopping Cart..."))
+        # messages.success(request, ("Item Deleted From Shopping Cart..."))
         return response
 
 

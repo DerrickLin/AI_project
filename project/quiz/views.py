@@ -96,7 +96,7 @@ def login_view(request):
             user = CustomUser.objects.get(username=username, password=password)
         except CustomUser.DoesNotExist:
             # Handle login failure with messages
-            messages.error(request, '無此帳號')
+            messages.error(request, ('帳號密碼錯誤'))
             return render(request, 'login.html')
 
         if user is not None and user.is_active:
@@ -105,10 +105,10 @@ def login_view(request):
             return redirect('home')
         else:
             # Handle login failure with messages
-            messages.error(request, '帳號密碼錯誤')
+            messages.error(request, ('帳號密碼錯誤'))
             return render(request, 'login.html')
     else:
-        return render(request, 'login.html')
+        return render(request, 'login.html', {})
 
     
 def main_page(request):
@@ -198,11 +198,12 @@ def home(request):
         
         # no class
         if len(result) == 0:
-            detect_finish = "未辨識出商品"
+            detect_finish = 0
             #合併成dict  
         elif len(result) != 0:
-            detect_finish = "辨識已完成"
-            
+            detect_finish = 1
+    else:
+        merged_Item_info= "None"
 
     return render(request, "home.html", locals())
 

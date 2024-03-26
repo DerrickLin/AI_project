@@ -1,7 +1,21 @@
 {% extends 'base.html'%}
 
+
 {%block content%}
         {% load static %}
+        <!-- 提示訊息 -->
+        {% if detect_finish == 1 %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>辨識已完成，請點選下方按鈕查看商品清單</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif detect_finish == 0 %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>未辨識出商品，請再嘗試一次</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
         <!-- Header-->
         <header class="bg-dark py-5">  <!--header顏色修改-->
             <div class="container px-4 px-lg-5 my-5">
@@ -11,6 +25,7 @@
                 </div>
             </div>
         </header>
+
 
 
         <!-- 辨識區域 這邊可能要改成一張圖片，否則畫面可能會太擠-->
@@ -30,7 +45,6 @@
                 <input type="file" class="form-control" id="input" name="myvalue" onchange="enableButton()">
                 <input class="input-group-text" type="submit" value="開始辨識" id="submitButton" disabled />
             </div>
-            <p class="container">{{detect_finish}}</p>
         </form>   
 
         <script src="{% static 'js/enableButton.js' %}"></script>
@@ -40,8 +54,6 @@
         
         <br/>
         
-        <!-- 辨識完成後按下按鈕跳出浮動視窗 -->
-        <!-- Button trigger modal -->
         <div class="container">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 查看商品清單
@@ -60,6 +72,8 @@
         </script>
 
 
+        <!-- 辨識完成後按下按鈕跳出浮動視窗 -->
+        <!-- Button trigger modal -->
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -94,22 +108,19 @@
                     {% endif %}
                 {% empty %}
                     <div class="modal-body">
-                        None
+                        {{merged_Item_info}}
                     </div>
                 {% endfor %}
 
 
                 <div class="modal-footer">
                     {% csrf_token %}
-                {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button> {% endcomment %}
-                <!-- 回傳result與數量， 先把button type改成"submit" -->
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="{{merged_Item_info}}" id="add-cart">加入購物車</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="{{merged_Item_info}}" id="add-cart">加入購物車</button>
                 </div>
             </div>
             </div>
         </div>
 
- 
 
         <script>
         //check if button pressed
@@ -120,14 +131,13 @@
                 url: '{% url 'cart_add' %}',
                 data: {
                     product_info: $('#add-cart').val(),
-                    //product_qty: $('#qty-cart option:selected').text(),
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     action: 'post',
                 },
-        
+
                 success: function(json){
                     //console.log(json)
-                    document.getElementById("cart_quantity").textContent = json.qty
+                    document.getElementById("cart_quantity").textContent = json.qty;
                 },
         
                 error: function(xhr, errmsg, err){
@@ -135,7 +145,9 @@
                 }
             });
         })
+
         </script> 
+
 
 
         <!-- Section-->
