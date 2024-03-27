@@ -67,7 +67,8 @@
             <label for="phone">電話號碼:</label>
             <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone }}" required>
         </div>
-        <button type="submit" class="btn btn-primary">更新資料</button>
+        <button type="submit" class="btn btn-secondary">更新資料</button> &nbsp;
+        <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">回主畫面</button>
     </form>
 </body>
 </html>

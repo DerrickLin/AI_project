@@ -96,16 +96,18 @@ def login_view(request):
             user = CustomUser.objects.get(username=username, password=password)
         except CustomUser.DoesNotExist:
             # Handle login failure with messages
-            messages.error(request, ('帳號密碼錯誤'))
+            messages.error(request, ('帳號或密碼錯誤'))
             return render(request, 'login.html')
 
         if user is not None and user.is_active:
             auth_login(request, user)
             print("Redirecting to main_page")
-            return redirect('home')
+            # messages.success(request, ('登入成功'))
+            # return redirect('home')
+            return render(request, 'home.html', {})
         else:
             # Handle login failure with messages
-            messages.error(request, ('帳號密碼錯誤'))
+            messages.error(request, ('帳號或密碼錯誤'))
             return render(request, 'login.html')
     else:
         return render(request, 'login.html', {})
@@ -120,6 +122,7 @@ def log_out(request):
     return render(request, 'log_out.html')
 
 
+# 處理讀進來的商品名
 def remove_duplicates(lst):
     seen = set()
     result = []

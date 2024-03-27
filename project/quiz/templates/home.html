@@ -6,7 +6,7 @@
         <!-- 提示訊息 -->
         {% if detect_finish == 1 %}
             <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>辨識已完成，請點選下方按鈕查看商品清單</strong> 
+                <strong>辨識已完成，請點選下方商品清單按鈕</strong> 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% elif detect_finish == 0 %}
@@ -17,11 +17,11 @@
         {% endif %}
 
         <!-- Header-->
-        <header class="bg-dark py-5">  <!--header顏色修改-->
+        <header class="bg-dark py-2">  <!--header顏色修改-->
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">shop hompeage template1</p>
+                    <h1 class="display-4 fw-bolder">無人商店購物網站</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">歡迎 {{user.username}}</p>
                 </div>
             </div>
         </header>
@@ -56,7 +56,7 @@
         
         <div class="container">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                查看商品清單
+                商品清單
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <form action="{% url 'renew_Picture' %}" method="post" id="renew-form">
                 {% csrf_token %}

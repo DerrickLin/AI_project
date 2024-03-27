@@ -10,7 +10,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'order_list'%}">訂單</a></li>
 
             {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'update_user'%}">更新</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'update_user'%}">更新資料</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'log_out'%}">登出</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login_view'%}">登入</a></li>
