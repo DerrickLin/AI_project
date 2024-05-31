@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>無人商店會員登入</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon1.ico'%}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #fff; /* 將背景色改為白色 */
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #000; /* 將標題文字顏色改為黑色 */
+        }
+        form {
+            margin: 0 auto;
+            background-color: #f0f0f0; /* 將表單背景色改為淺灰色 */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #000; /* 將標籤文字顏色改為黑色 */
+        }
+        .btn-login {
+            background-color: #000; /* 將按鈕背景色改為黑色 */
+            color: #fff; /* 將按鈕文字顏色改為白色 */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-login:hover {
+            background-color: #333; /* 將按鈕在懸停時的背景色改為深灰色 */
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #000; /* 將註冊連結文字顏色改為黑色 */
+        }
+        .register-link a {
+            color: #000; /* 將註冊連結的文字顏色改為黑色 */
+            font-weight: bold;
+        }
+        .scale-up-hor-left {
+            -webkit-animation: scale-up-hor-left 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+                    animation: scale-up-hor-left 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        }
+        
+        @-webkit-keyframes scale-up-hor-left {
+            0% {
+              -webkit-transform: scaleX(0.4);
+                      transform: scaleX(0.4);
+              -webkit-transform-origin: 0% 0%;
+                      transform-origin: 0% 0%;
+            }
+            100% {
+              -webkit-transform: scaleX(1);
+                      transform: scaleX(1);
+              -webkit-transform-origin: 0% 0%;
+                      transform-origin: 0% 0%;
+            }
+          }
+          @keyframes scale-up-hor-left {
+            0% {
+              -webkit-transform: scaleX(0.4);
+                      transform: scaleX(0.4);
+              -webkit-transform-origin: 0% 0%;
+                      transform-origin: 0% 0%;
+            }
+            100% {
+              -webkit-transform: scaleX(1);
+                      transform: scaleX(1);
+              -webkit-transform-origin: 0% 0%;
+                      transform-origin: 0% 0%;
+            }
+          }
+          
+
+    </style>
+</head>
+<body>
+    <div class="container scale-up-hor-left">
+        <h1>無人商店會員登入</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">帳號:</label>
+                <input type="text" class="form-control" name="username" id="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">密碼:</label>
+                <input type="password" class="form-control" name="password" id="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-login" name="login">登入</button>
+        </form>
+
+        <div class="register-link">
+            還沒有帳號？ <a href="{% url 'sign_up' %}">註冊</a>
+        </div>
+    </div>
+</body>
+</html>

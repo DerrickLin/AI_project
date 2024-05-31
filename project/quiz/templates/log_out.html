@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon1.ico'%}" />
+    <title>登出</title>
+    <style>
+        body {
+            background-color: #fff; /* 將背景色改為白色 */
+            font-family: Arial, sans-serif;
+            color: #000; /* 將文字顏色改為黑色 */
+        }
+        p {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #000; /* 將連結文字顏色改為黑色 */
+        }
+        a:hover {
+            color: #333; /* 將連結在懸停時的顏色改為深灰色 */
+        }
+    </style>
+</head>
+<body>
+    <p>感謝您的使用，您已經成功登出。</p>
+    <a href="{% url 'login_view' %}">點擊這裡回到登入頁面</a>    
+</body>
+</html>

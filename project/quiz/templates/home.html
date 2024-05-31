@@ -1,0 +1,237 @@
+{% extends 'base.html'%}
+
+
+{%block content%}
+        {% load static %}
+        <!-- 提示訊息 -->
+        {% if detect_finish == 1 %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>辨識已完成，請點選下方商品清單按鈕</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif detect_finish == 0 %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>未辨識出商品，請再嘗試一次</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <!-- Header-->
+        <header class="bg-dark py-2">  <!--header顏色修改-->
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder animate__animated animate__fadeInDown">無人商店購物網站</h1>
+                    <p class="lead fw-normal text-white-50 mb-0 animate__animated animate__fadeInDown">welcome {{user.username}}</p>
+                </div>
+            </div>
+        </header>
+
+
+
+        <!-- 辨識區域 這邊可能要改成一張圖片，否則畫面可能會太擠-->
+        <br/>
+
+        <!-- 顯示辨識後框選的圖片 -->
+        {% if default_img == 0 %}
+            <div class="text-center">
+                <img src="{% static "assets/default.png" %}" class="rounded" alt="..." width="250" height="250" id="default-img" onload="enable_Renew_Button()"/>
+            </div>
+        {% elif default_img == 1 %}
+            <div class="text-center">
+                <img src="{% static "assets/result.jpg"%}" class="rounded" alt="..." width="250" height="250" id="result-img" onload="enable_Renew_Button()"/>
+            </div>
+        {% endif %}
+
+
+        <!--上傳圖片-->
+        <form action="/home/" method="POST" name="form1" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <br/>
+            <div class="container px-4 px-lg-5">
+            {% comment %} <div class="input-group"> {% endcomment %}
+                <input type="file" class="form-control" id="input" name="myvalue" required/>
+                <input class="input-group-text" type="submit" value="開始辨識"/>
+            </div>
+        </form>   
+
+        
+        <div id="error-message" style="color: red;"></div>
+        
+        <br/>
+        
+        
+        <div class="container px-4 px-lg-5">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                商品清單
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if default_img == 1 %}
+                <form action="{% url 'renew_Picture' %}" method="post" id="renew-form">
+                    {% csrf_token %}
+                    <input type="hidden" value="sucess" name="mess" />
+                    <button id="renew-button" type="submit" onclick="window.location.href='{% url 'home' %}'" class="btn btn-primary" value="sucess" disabled>清除照片</button>
+                </form> 
+            {% endif %}
+        </div>
+
+        <script>
+            function enable_Renew_Button() {
+                document.getElementById("renew-button").disabled = false;
+            }
+        </script>
+
+
+        <!-- 辨識完成後按下按鈕跳出浮動視窗 -->
+        <!-- Button trigger modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">商品清單</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                
+                {% for i in result %}
+                    {% if i == "noodle" %}
+                        <div class="modal-body">
+                            來一客-京燉肉骨, &nbsp;   數量 : {{noodle_amount}}
+                        </div>
+                    {% elif i == "OOha" %}
+                        <div class="modal-body">
+                            OOHA氣泡飲-柚子海鹽, &nbsp;  數量 : {{ooha_amount}}
+                        </div>    
+                    {% elif i == "hi_chew" %}
+                        <div class="modal-body">
+                            嗨啾軟糖-葡萄口味, &nbsp;   數量 : {{hi_chew_amount}}
+                        </div> 
+                    {% elif i == "cookie" %}
+                        <div class="modal-body">
+                            真魷味, &nbsp;   數量 : {{cookie_amount}}
+                        </div>                
+                    {% elif i == "black_tea" %}
+                        <div class="modal-body">
+                            麥香紅茶, &nbsp;   數量 : {{tea_amount}}
+                        </div> 
+                    {% endif %}
+                {% empty %}
+                    <div class="modal-body">
+                        {{merged_Item_info}}
+                    </div>
+                {% endfor %}
+
+
+                <div class="modal-footer">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" value="{{merged_Item_info}}" id="add-cart">加入購物車</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <script>
+        //check if button pressed
+        $(document).on('click', '#add-cart', function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_add' %}',
+                data: {
+                    product_info: $('#add-cart').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post',
+                },
+
+                success: function(json){
+                    //console.log(json)
+                    document.getElementById("cart_quantity").textContent = json.qty;
+                },
+        
+                error: function(xhr, errmsg, err){
+        
+                }
+            });
+        })
+
+        </script> 
+
+      
+        <!-- Section-->
+        <section class="py-4">
+            <div class="container my-4"><h3><strong>推薦商品</strong> &nbsp<span class="badge text-bg-danger">New</span></h3></div>
+            <div class="container px-4 px-lg-5 mt-3">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% if not_login == 1 %}
+                        {% for product in products %} 
+                        <div class="col mb-3">
+                            <div class="card h-100">
+                                <!-- Sale badge-->
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                <!-- Product image-->
+                                <img class="card-img-top" src="{{ product.pImage.url }}"  alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-2">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ product.pName }}</h5>
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                        </div>
+                                        <!-- Product price-->
+                                        {% comment %} <span class="text-muted text-decoration-line-through">$20.00</span>
+                                        $18.00 {% endcomment %}
+                                        ${{ product.pCost }}<br/><br/>
+                                        <h6 class="fw-bolder">貨架位置 : {{ product.pLoc }} </h6>
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                {% comment %} <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                </div> {% endcomment %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for recommendation in recommendations %}
+                        <div class="col mb-3">
+                            <div class="card h-100">
+                                <!-- Sale badge-->
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                <!-- Product image-->
+                                <img class="card-img-top" src="{{ recommendation.pImage.url }}"  alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-2">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ recommendation.pName }}</h5>
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                            <div class="bi-star-fill"></div>
+                                        </div>
+                                        <!-- Product price-->
+                                        {% comment %} <span class="text-muted text-decoration-line-through">$20.00</span>
+                                        $18.00 {% endcomment %}
+                                        ${{ recommendation.pCost }}<br/><br/>
+                                        <h6 class="fw-bolder">貨架位置 : {{ recommendation.pLoc }} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+{%endblock%}
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新會員資料</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #fff; /* 背景色改為白色 */
+            font-family: Arial, sans-serif;
+            color: #000; /* 文字顏色改為黑色 */
+        }
+        h1 {
+            text-align: center;
+            color: #000; /* 標題文字顏色改為黑色 */
+            margin-top: 50px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #f0f0f0; /* 表單背景色改為淺灰色 */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            color: #000; /* 標籤文字顏色改為黑色 */
+            font-weight: bold;
+        }
+        .form-control {
+            border: 2px solid #000; /* 輸入框邊框顏色改為黑色 */
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #000; /* 按鈕背景色改為黑色 */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #333; /* 按鈕在懸停時的背景色改為深灰色 */
+        }
+    </style> 
+</head>
+<body>
+    <h1>更改會員資料</h1>
+
+    {% comment %} <form method="post" action="{% url 'update_user' %}"> {% endcomment %}
+    <form method="post" action="/update_user/{{user.id}}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">帳號:</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">密碼:</label>
+            <input type="text" class="form-control" id="password" name="password" value="{{ user.password }}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">電子郵件:</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">電話號碼:</label>
+            <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone }}" required>
+        </div>
+        <button type="submit" class="btn btn-secondary">更新資料</button> &nbsp;
+        <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">回主畫面</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends 'base.html'%}
+
+{%block content%}
+        {% load static %}
+        <!-- Header-->
+
+        <header class="bg-dark py-2">  <!--header顏色修改-->
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">購物車</h1>
+                    {% comment %} <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p> {% endcomment %}
+                </div>
+            </div>
+        </header>
+        <br/>
+        <div class="container">
+            <div class="row">
+            {% comment %} 帶出商品card {% endcomment %}
+            {% for product, Quantity in All_products.items %}
+            
+                <div class="card mb-3">
+                    <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ product.pImage.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">{{product.pName}}</h5>
+                                <p class="card-text">單價 : {{product.pCost}}</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-3">數量 : {{Quantity}}</div> 
+                                </div>
+                                <br/>
+                                {% comment %} <a href="{% url 'home' %}" class="btn btn-secondary">home</a>  {% endcomment %}
+                                {% comment %} <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Remove</button>  {% endcomment %}
+                            </center>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <br/> 
+            {% endfor %}
+            {% if totals == 0 %}
+                <h3>購物車是空的...</h3>
+            {% else %}
+                
+                <span><h3>Total: ${{totals}}</h3></span>
+                
+            {% endif %}
+            
+            <div class="p-3 m-0 border-0 bd-example m-0 border-0 d-flex justify-content-between">
+                <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">回主畫面</button>
+                {% if totals != 0 %}
+                    <form action="{% url 'checkout' %}" method="post" class="mb-0">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{All_products}}" name="oProduct" />
+                        <input type="hidden" value="{{user.username}}" name="oClient" />
+                        <input type="hidden" value="{{totals}}" name="oCost" />
+                        <input type="hidden" value="{{item_amount}}" name="order_quantity" />
+                        <button type="submit" class="btn btn-success" >確認結帳</button>
+                    </form>
+                    <form action="{% url 'cart_clear' %}" method="post" class="mb-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" >清空購物車</button>
+                    </form>
+                {% endif %}
+            </div>
+            <br/><br/><br/>
+            </div>
+        </div>
+      
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+{% comment %} Delete Item From Cart {% endcomment %}
+<script>
+$(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+    // grab the product id
+    //var productid = $(this).data('index');
+
+    $.ajax({
+    type: 'POST',
+    url: '{% url 'cart_delete' %}',
+    data: {
+      product_id: $(this).data('index'),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post'
+    },
+    success: function(json){
+        //console.log(json)
+        //document.getElementById("cart_quantity").textContent = json.qty
+        location.reload();
+    },
+
+    error: function(xhr, errmsg, err){
+
+    }
+
+
+    });
+
+})
+
+</script>
+{%endblock%}
+

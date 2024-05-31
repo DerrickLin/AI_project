@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon1.ico'%}" />
+    <title>註冊</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #fff; /* 將背景色改為白色 */
+        }
+        h1 {
+            text-align: center;
+            color: #000; /* 將標題文字顏色改為黑色 */
+           
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #f0f0f0; /* 將表單背景色改為淺灰色 */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            color: #000; /* 將標籤文字顏色改為黑色 */
+            font-weight: bold;
+        }
+        .form-control {
+            border: 2px solid #000; /* 將輸入框邊框顏色改為黑色 */
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #000; /* 將按鈕背景色改為黑色 */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #333; /* 將按鈕在懸停時的背景色改為深灰色 */
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login-link a {
+            color: #000; /* 將註冊連結文字顏色改為黑色 */
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>無人商店會員註冊</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" action="{% url 'sign_up' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">帳號:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密碼:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="email">電子郵件:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">電話號碼:</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            <button type="submit" class="btn btn-primary">送出</button>
+        </form>
+
+        <div class="login-link">
+            已有會員帳號？ <a href="{% url 'login_view' %}">登入</a>
+        </div>
+    </div>
+</body>
+</html>

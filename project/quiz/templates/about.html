@@ -1,0 +1,99 @@
+{% extends 'base.html'%}
+{%block content%}
+<!-- Header-->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <header class="bg-dark py-2">
+            <div class="container px-4 px-lg-5 my-3">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">關於我們...</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">歡迎來到無人商店</p>
+                </div>
+            </div>
+        </header>
+
+        <br/><br/>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <strong style="color:CornflowerBlue;">#1  專題研究動機</strong>
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <p>&nbsp &nbsp&nbsp &nbsp&nbsp在數位化轉型的浪潮下，無人商店代表了零售業的未來方向，提供了無縫購
+                    物體驗和降低運營成本的雙重優勢。然而，現有自助結帳系統對於部分消費者而
+                    言，操作複雜度高且對於單一商品購買的便捷性仍有限。儘管自助結帳解決了一
+                    些傳統零售業的問題，像是減少人力成本、減緩排隊人潮等等，不過如果遇上對
+                    於系統操作不熟悉的民眾，可能反而增加等待時間，導致大眾還是傾向人工結帳，
+                    使得自助結帳機台使用率不佳。 </p>
+                    <p>&nbsp &nbsp&nbsp &nbsp&nbsp隨著人工智慧與影像辨識技術的進步，在現今已經有許多實際的應用，例如：
+                    零件檢測、垃圾分類等等，這些應用除了提高運作效率外，也降低了許多人力成
+                    本。<strong>本研究專題擬結合影像辨識技術，開發一款購物應用程式，讓消費者隨時開啟APP中的鏡頭辨識，將辨識出的商品加進購物車中，直接在APP做結帳的動作，好處是可以一次辨識多樣商品，讓消費者能夠更輕鬆、迅速地完成購物流程，
+                    無需排隊等待結帳櫃檯的服務。</strong></p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  <strong style="color:CornflowerBlue;">#2 主要運用技術</strong>
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    APP主要結合<strong>深度學習、影像辨識</strong>等技術，透過<a href="https://github.com/WongKinYiu/yolov9" target="_blank" style="text-decoration:none;">YOLOv9</a>深度學習模型與<a href="https://roboflow.com/" target="_blank" style="text-decoration:none;">roboflow</a>平
+                    台訓練商品模型，將模型部署在雲端利用API與APP做結合，另外也會在APP中加入推薦系統，提供個性化的購物建議。
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                  <strong style="color:CornflowerBlue;">#3 未來可以改進的地方。</strong>
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  1. 實現更高的商品辨識準確率，通過廣泛的商品種類和環境條件測試。<br/>
+                  2. 進行多階段的模型訓練，包括豐富的資料增強和細節調整，並探索結合多個模型的可能性以提高準確率。<br/>
+                  3. 優化APP介面設計，提升使用者體驗。<br/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <br/><br/><br/><br/>
+
+        <div class="container">
+        <button class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">回覆表單</button>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><strong>告訴我們可以改進的地方</strong></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            {% comment %} <p>Try scrolling the rest of the page to see this option in action.</p> {% endcomment %}
+            <form action="/feedback/" method="post" name="feedback">
+                {% csrf_token %}
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="user_feedback" required></textarea>
+                    <label for="floatingTextarea2">Comment here, at most 300 words.</label>
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary">送出</button>
+            </form>
+        </div>
+        </div>
+        </div>
+
+        <br/><br/><br/>
+{%endblock%}

@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <header class="bg-dark py-2">
+        <div class="container px-4 px-lg-5 my-3">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">歷史訂單</h1>
+                <p class="lead fw-normal text-white-50 mb-0">歡迎來到無人商店</p>
+            </div>
+        </div>
+    </header>
+    <br/>
+
+    <div class="container">
+
+        {% if orders %}
+            <div class="card">
+            <div class="card-body">
+                <ul>
+                {% for order in orders %}
+                <li>訂單編號 &nbsp: {{ order.oId }}</li>
+                <li>訂單日期 &nbsp: {{ order.oDate }}</li>
+                <li>商品 &nbsp: 
+                    {% for product in order.oProduct.all %}
+                    {{ product.pName }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+                <li>總金額 &nbsp: {{ order.oCost }}</li>
+                <li>數量 &nbsp: {{ order.order_quantity }}</li>
+                <hr style="border-top: dashed 2px gray;">
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>暫無訂單資訊。</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="p-3 m-0 border-0 bd-example m-0 border-0 d-flex justify-content-between">
+                <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">回主畫面</button>
+            </div> 
+        </div>
+    </div>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+{% endblock %}
