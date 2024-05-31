@@ -70,7 +70,7 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             print("User registered successfully.")
-            return redirect('home')
+            return redirect('login_view')
         else:
             messages.error(request, ('此帳號名稱已被使用，請重新輸入'))
             print("Form errors:", form.errors)
