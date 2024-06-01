@@ -70,12 +70,11 @@ def cart_add(request):
 
             # get cart quantity
             cart_quantity = cart.__len__()
-
+            print(cart_quantity)
             # return response
             # response_data.append({'Product Name': product_info.pName})
             response = JsonResponse({'qty': cart_quantity})
             # response_data.append({'qty': product_total_quantity})
-
         # return JsonResponse(response_data, safe=False)
         return response
 
@@ -146,6 +145,13 @@ def cart_clear(request):
     cart.clear_items()
     request.session.pop('item_amount', None)
     request.session.save()
-    os.remove('./project/static/assets/test.jpg')
-    os.remove('./project/static/assets/result.jpg')
+
+    test_img_path = './project/static/assets/test.jpg'
+    if os.path.exists(test_img_path):
+        os.remove(test_img_path)
+
+    result_img_path = './project/static/assets/result.jpg'
+    if os.path.exists(result_img_path):
+        os.remove(result_img_path)
+
     return redirect('cart_summary')

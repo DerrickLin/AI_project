@@ -97,9 +97,15 @@
         <h1>無人商店會員登入</h1>
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ message }}
-                </div>
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{message}}
+                    </div>
+                {% endif}
             {% endfor %}
         {% endif %}
 
