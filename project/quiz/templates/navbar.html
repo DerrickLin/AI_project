@@ -1,15 +1,16 @@
         <!-- Navigation-->
+        {% load static %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="{% url 'home'%}">無人商店</a>
+                <a class="navbar-brand" href="{% url 'home'%}"><img src="{% static 'assets/favicon1.ico' %}" width="30" height="30" class="d-inline-block align-top"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
               
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">商品</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{% url 'shop'%}">All Products</a></li>
+                                <li><a class="dropdown-item" href="{% url 'shop'%}">所有商品</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="{% url 'noodles'%}">泡麵</a></li>
                                 <li><a class="dropdown-item" href="{% url 'candy'%}">糖果</a></li>
@@ -21,19 +22,19 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Info</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{% url 'order_list'%}">Your Orders</a></li>
+                                <li><a class="dropdown-item" href="{% url 'order_list'%}">歷史訂單</a></li>
                                 
-                                <li><a class="dropdown-item" href="{% url 'about'%}">About</a></li>
+                                <li><a class="dropdown-item" href="{% url 'about'%}">關於</a></li>
                               
                             </ul>
                         </li>
 
                         {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'update_user'%}">Memberships</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'log_out'%}">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'update_user'%}">會員</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'log_out'%}">登出</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'login_view'%}">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'sign_up'%}">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login_view'%}">登入</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'sign_up'%}">註冊</a></li>
                         {% endif %}
                     </ul>
                    
