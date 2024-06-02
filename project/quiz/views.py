@@ -360,10 +360,14 @@ def shop(request):
     products = product.objects.all()
     sort_by = request.GET.get('sort_by')
 
-    if sort_by == 'price_asc':
+    if sort_by == 'newest':
+        products = products.order_by('-pId')
+    elif sort_by == 'price_asc':
         products = products.order_by('pCost')
     elif sort_by == 'price_desc':
         products = products.order_by('-pCost')
+    elif sort_by == 'position':
+        products = products.order_by('pLoc')
 
     prods = "所有"
     return render(request, 'shop.html', locals())
@@ -374,10 +378,14 @@ def noodles(request):
     products = product.objects.filter(pCategory=noodles_category.id)
     sort_by = request.GET.get('sort_by')
 
-    if sort_by == 'price_asc':
+    if sort_by == 'newest':
+        products = products.order_by('-pId')
+    elif sort_by == 'price_asc':
         products = products.order_by('pCost')
     elif sort_by == 'price_desc':
         products = products.order_by('-pCost')
+    elif sort_by == 'position':
+        products = products.order_by('pLoc')
 
     prods = "泡麵"
     return render(request, 'shop.html', locals())
@@ -388,10 +396,14 @@ def candy(request):
     products = product.objects.filter(pCategory=candy_category.id)
     sort_by = request.GET.get('sort_by')
 
-    if sort_by == 'price_asc':
+    if sort_by == 'newest':
+        products = products.order_by('-pId')
+    elif sort_by == 'price_asc':
         products = products.order_by('pCost')
     elif sort_by == 'price_desc':
         products = products.order_by('-pCost')
+    elif sort_by == 'position':
+        products = products.order_by('pLoc')
 
     prods = "糖果"
     return render(request, 'shop.html', locals())
@@ -402,10 +414,14 @@ def biscuits(request):
     products = product.objects.filter(pCategory=biscuits_category.id)
     sort_by = request.GET.get('sort_by')
 
-    if sort_by == 'price_asc':
+    if sort_by == 'newest':
+        products = products.order_by('-pId')
+    elif sort_by == 'price_asc':
         products = products.order_by('pCost')
     elif sort_by == 'price_desc':
         products = products.order_by('-pCost')
+    elif sort_by == 'position':
+        products = products.order_by('pLoc')
 
     prods = "餅乾"
     return render(request, 'shop.html', locals())
@@ -416,10 +432,14 @@ def drinks(request):
     products = product.objects.filter(pCategory=drinks_category.id)
     sort_by = request.GET.get('sort_by')
 
-    if sort_by == 'price_asc':
+    if sort_by == 'newest':
+        products = products.order_by('-pId')
+    elif sort_by == 'price_asc':
         products = products.order_by('pCost')
     elif sort_by == 'price_desc':
         products = products.order_by('-pCost')
+    elif sort_by == 'position':
+        products = products.order_by('pLoc')
 
     prods = "飲料"
     return render(request, 'shop.html', locals())
@@ -442,6 +462,7 @@ def order_list(request):
 
     # 查詢與該使用者相關聯的訂單
     user_orders = order.objects.filter(oClient=user)
+    user_orders = user_orders.order_by('-oDate')
 
     # 將訂單資料傳遞給模板
     context = {'orders': user_orders}

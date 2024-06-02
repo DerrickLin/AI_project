@@ -7,7 +7,7 @@
         <header class="bg-dark py-2">  <!--header顏色修改-->
             <div class="container px-4 px-lg-5 my-3">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">購物車</h1>
+                    <h1 class="display-4 fw-bolder">Cart</h1>
                     {% comment %} <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p> {% endcomment %}
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <br/> 
             {% endfor %}
             {% if totals == 0 %}
-                <h3>購物車是空的...</h3>
+                <h3>Your Cart is empty.</h3>
             {% else %}
                 
                 <span><h3>Total: ${{totals}}</h3></span>
