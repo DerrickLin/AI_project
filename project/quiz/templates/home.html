@@ -6,12 +6,12 @@
         <!-- 提示訊息 -->
         {% if detect_finish == 1 %}
             <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>辨識已完成，請點選下方商品清單按鈕</strong> 
+                <strong>辨識已完成，請點選下方商品清單按鈕。</strong> 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% elif detect_finish == 0 %}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>未辨識出商品，請再嘗試一次</strong> 
+                <strong>未辨識出商品，請再嘗試一次。</strong> 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
@@ -21,7 +21,7 @@
         <header class="bg-dark py-2">  <!--header顏色修改-->
             <div class="container px-4 px-lg-5 my-3">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder animate__animated animate__fadeInDown">無人商店購物App</h1>
+                    <h1 class="display-4 fw-bolder animate__animated animate__fadeInDown">無人商店購物 App</h1>
                     <p class="lead fw-normal text-white-50 mb-0 animate__animated animate__fadeInDown">Welcome, {{user.username}}!</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <div class="container px-4 px-lg-5">
             {% comment %} <div class="input-group"> {% endcomment %}
                 <input type="file" class="form-control" id="input" name="myvalue" required/>
-                <input class="input-group-text btn btn-outline-dark" type="submit" value="開始辨識"/>
+                <input class="input-group-text" type="submit" value="開始辨識"/>
             </div>
         </form>   
 
@@ -62,7 +62,7 @@
         
         
         <div class="container px-4 px-lg-5">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 商品清單
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {% if default_img == 1 %}

@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{%block content%}
+{% block content %}
 <!-- Header-->
         {% if messages %}
             {% for message in messages %}
@@ -13,12 +13,11 @@
         <header class="bg-dark py-2">
             <div class="container px-4 px-lg-5 my-3">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">About Us</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">歡迎來到無人商店</p>
+                    <h1 class="display-4 fw-bolder">關於我們</h1>
+                    <!-- <p class="lead fw-normal text-white-50 mb-0">歡迎來到無人商店</p> -->
                 </div>
             </div>
         </header>
-
         <br/><br/>
         <div class="accordion" id="accordionPanelsStayOpenExample">
             <div class="accordion-item">
@@ -88,14 +87,14 @@
                 {% csrf_token %}
                 <div class="form-floating">
                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="user_feedback" required></textarea>
-                    <label for="floatingTextarea2">Comment here, at most 300 words.</label>
+                    <label for="floatingTextarea2">輸入最多300字</label>
                 </div>
                 <br/>
-                <button type="submit" class="btn btn-primary">送出</button>
+                <button type="submit" class="btn btn-dark">送出</button>
             </form>
         </div>
         </div>
         </div>
 
         <br/><br/><br/>
-{%endblock%}
+{% endblock %}
