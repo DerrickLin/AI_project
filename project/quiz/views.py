@@ -7,7 +7,7 @@ from .models import CustomUser, product, Category, order, Feedback
 from .forms import SignUpForm
 from django.views.generic import CreateView
 from .forms import RegisterForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Q
@@ -95,6 +95,9 @@ def check_user_existence(username):
 
 @csrf_protect
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('home'))
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -117,7 +120,8 @@ def login_view(request):
             # return redirect('home')
             recommendations = get_preference(user=request.user)
             default_img = 0
-            return render(request, 'home.html', locals())
+            return redirect(reverse('home'))
+            # return render(request, 'home.html', locals())
     else:
         return render(request, 'login.html', {})
 
@@ -144,6 +148,7 @@ def remove_duplicates(lst):
 
 # 這邊之後要改成將框選照片存到model中，把暫存在assets中的圖片刪掉
 @csrf_protect
+@login_required
 def home(request):
     if request.user.is_authenticated:
         if request.method == "POST":  #如果是以POST方式才處理
@@ -154,8 +159,8 @@ def home(request):
 
             # detection
             predictions_dict = model.predict(
-                './project/static/assets/test.jpg', confidence=40,
-                overlap=30).json()
+                './project/static/assets/test.jpg', confidence=20,
+                overlap=10).json()
             pred_list = predictions_dict['predictions']
 
             # add class to results
@@ -221,6 +226,7 @@ def home(request):
                 detect_finish = 1
 
             default_img = 1
+            recommendations = get_preference(user=request.user)
         else:
             merged_Item_info = "None"
             default_img = 0
