@@ -148,7 +148,6 @@ def remove_duplicates(lst):
 
 # 這邊之後要改成將框選照片存到model中，把暫存在assets中的圖片刪掉
 @csrf_protect
-@login_required
 def home(request):
     if request.user.is_authenticated:
         if request.method == "POST":  #如果是以POST方式才處理
