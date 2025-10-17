@@ -25,8 +25,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.views.decorators.csrf import csrf_protect
 
 #import the model deploied on Roboflow
-rf = Roboflow(api_key="WBwLaRxuckwQFXwFCETu")
-project = rf.workspace().project("item_detection-fucyd")
+rf = Roboflow(api_key="your api key")
+project = rf.workspace().project("project name")
 model = project.version("4").model
 
 
